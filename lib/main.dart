@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 //import 'home.dart';
 import 'login.dart';
+import 'app.dart';
+//import 'bar.dart';
+//import 'apptheme.dart';
+import 'sanckbarapp.dart';
+
 
 // HomePage() Object construction will internally execute the build method
-void main() => runApp(MyApp());
+// runApp function should take Object as Input which should be a widget returning MaterialApp Widget
+void main() => runApp(MyMaterialSnackBarApp());
 
 class MyApp extends StatelessWidget{
 
