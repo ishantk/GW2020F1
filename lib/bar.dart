@@ -31,7 +31,15 @@ class MyMaterialAppBar extends StatelessWidget{
               icon: const Icon(Icons.add_a_photo),
               tooltip: 'Click to Add Photo',
               onPressed: (){
-
+                final sBar = SnackBar(
+                  content: Text("This is Awesome :)"),
+                  action: SnackBarAction(
+                    label: "Exit",
+                    onPressed: (){
+                    },
+                  ),
+                );
+                Scaffold.of(context).showSnackBar(sBar);
               },
             )
           ],

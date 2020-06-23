@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 //import 'home.dart';
-import 'login.dart';
-import 'app.dart';
+//import 'login.dart';
+//import 'app.dart';
 //import 'bar.dart';
 //import 'apptheme.dart';
-import 'sanckbarapp.dart';
+//import 'sanckbarapp.dart';
+import 'scaffoldui.dart';
 
 
 // HomePage() Object construction will internally execute the build method
 // runApp function should take Object as Input which should be a widget returning MaterialApp Widget
-void main() => runApp(MyMaterialSnackBarApp());
+void main() => runApp(ScaffoldApp());
 
 class MyApp extends StatelessWidget{
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       title: "GW2020F1",
       //home: HomePage(),
-      home: LoginPage(),
+//      home: LoginPage(),
     );
   }
 }
