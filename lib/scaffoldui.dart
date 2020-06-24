@@ -54,8 +54,15 @@ class ScaffoldHomePageState extends State<ScaffoldHomePage>{
       appBar: AppBar(
         title: Text("Home Page"),
       ),
+      backgroundColor: Colors.greenAccent,
       body: Center(
-        child: Text("Quote: ${quotes[i]}"),
+        child: Text(
+          "Quote\n${quotes[i]}",
+          style: TextStyle(
+              fontSize: 24.0
+          ),
+          textAlign: TextAlign.center,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.message),
