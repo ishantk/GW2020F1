@@ -41,8 +41,8 @@ class HomeBody extends StatelessWidget{
   Widget build(BuildContext context) {
     //return createNewsListView(context);
     //return createBrandsListView(context);
-    //return createDynamicNewsListView(context);
-    return createColorSwatches(context);
+    return createDynamicNewsListView(context);
+    //return createColorSwatches(context);
   }
 }
 

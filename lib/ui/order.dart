@@ -33,7 +33,7 @@ class OrderPage extends StatelessWidget{
 
 // The Function Below is executed and is going to get some result back from the PromoCodes UI
 // Let us make this function async i.e. let it execute in the background
-void showResultFromPromoCodes(BuildContext context) async {
+showResultFromPromoCodes(BuildContext context) async {
   final Promo result = await Navigator.push(   // startActivity()
                  context,
                  MaterialPageRoute( // Intent
@@ -44,4 +44,27 @@ void showResultFromPromoCodes(BuildContext context) async {
   String message = "Promo Code Details Name: ${result.name} and Discount: ${result.discount}";
   // HW: Display the Above Message in AlertDialog
 
+  showAlertDialog(context, message);
+
+}
+
+showAlertDialog(BuildContext context, String message){
+  // Solution
+  return showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text("Promo Code Applied"),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Done"),
+              onPressed: (){
+                Navigator.of(context).pop(); // Dismiss the Dialog i.e. remove from memory itself
+              },
+            )
+          ],
+        );
+      }
+  );
 }
