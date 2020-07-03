@@ -50,6 +50,10 @@ flutter:
     - assets/mask.png
     - assets/soap.png
     - assets/temperature.png
+    - assets/rock.jpeg
+    - assets/john.jpeg
+    - assets/tripleh.jpeg
+    - assets/batista.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
