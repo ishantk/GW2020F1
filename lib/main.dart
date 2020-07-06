@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gw2020f1/test.dart';
 //import 'home.dart';
 //import 'login.dart';
 //import 'app.dart';
@@ -24,7 +23,10 @@ import 'package:gw2020f1/test.dart';
 //import 'package:gw2020f1/ui/rowcolumn.dart';
 //import 'package:gw2020f1/ui/container.dart';
 //import 'package:gw2020f1/ui/grid-and-list.dart';
-import 'package:gw2020f1/ui/card-widget.dart';
+//import 'package:gw2020f1/ui/card-widget.dart';
+
+//import 'package:gw2020f1/ui/stack.dart';
+import 'package:gw2020f1/ui/json-parsing.dart';
 
 // runApp function should take Object as Input which should be a widget returning MaterialApp Widget
 //void main() => runApp(NavDataApp());
