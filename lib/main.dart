@@ -28,8 +28,11 @@ import 'package:flutter/material.dart';
 //import 'package:gw2020f1/ui/stack.dart';
 //import 'package:gw2020f1/ui/json-parsing.dart';
 //import 'package:gw2020f1/ui/josn-parsing-with-headers.dart';
-import 'package:gw2020f1/ui/navigation-with-animation.dart';
+//import 'package:gw2020f1/ui/navigation-with-animation.dart';
 
+//import 'package:gw2020f1/ui/gesture-detector.dart';
+
+import 'package:gw2020f1/ui/inkwell.dart';
 // runApp function should take Object as Input which should be a widget returning MaterialApp Widget
 //void main() => runApp(NavDataApp());
 void main() => runApp(MyApp());

@@ -9,6 +9,8 @@ import 'dart:convert';
 
 import 'dart:async';
 
+import 'package:webview_flutter/webview_flutter.dart';
+
 // http.Client will be used to send the network request
 // async -> execute the function in the background as a thread. it runs parallel to the UI
 //Future<String> fetchNews(http.Client client) async{
@@ -55,8 +57,9 @@ class News{
   String urlToImage;
   String publishedAt;
   String description;
+  String url;
 
-  News({this.title, this.author, this.urlToImage, this.publishedAt, this.description});
+  News({this.title, this.author, this.urlToImage, this.publishedAt, this.description, this.url});
 
   // In Dart, factory named constructor is the one which will use other constructor to create and return back an object
   factory News.fromJson(Map<String, dynamic> json){
@@ -67,6 +70,7 @@ class News{
       urlToImage: json['urlToImage'],
       publishedAt: json['publishedAt'],
       description: json['description'],
+      url: json['url'],
     );
   }
 
@@ -114,28 +118,60 @@ class NewsList extends StatelessWidget{
     return ListView.separated(
       itemCount: news.length,
       itemBuilder: (context, index) { // index will begin from 0 till news.length
-        return Card(
-          margin: EdgeInsets.all(8),
-          child: Container(
-            padding: EdgeInsets.all(8),
-            child: Column(
-              children: [
-                Image.network(news[index].urlToImage),
-                SizedBox(height: 10,),
-                Divider(),
-                SizedBox(height: 10,),
-                Text(news[index].title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
-                Text(news[index].author, style:TextStyle(fontSize: 18),)
-              ],
+        return GestureDetector(
+          child: Card(
+            margin: EdgeInsets.all(8),
+            child: Container(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  Image.network(news[index].urlToImage),
+                  SizedBox(height: 10,),
+                  Divider(),
+                  SizedBox(height: 10,),
+                  Text(news[index].title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+                  Text(news[index].author, style:TextStyle(fontSize: 18),)
+                ],
+              ),
             ),
           ),
+          onTap: () {
+            Navigator.push(   // startActivity()
+                context,
+                MaterialPageRoute( // Intent
+                    builder: (context) => NewsPage(url: news[index].url)
+                )
+            );
+          },
         );
+
       },
       separatorBuilder: (context, index) {
         return Divider(
           color: Colors.amber,
         );
       },
+    );
+  }
+}
+
+class NewsPage extends StatelessWidget{
+
+  final String url;
+
+  NewsPage({Key key, this.url}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+        title: Text("News Page"),
+    ),
+    //body: FutureBuilder<String>(
+    body: WebView(
+      initialUrl: url,
+      javascriptMode: JavascriptMode.unrestricted,
+    )
     );
   }
 }
