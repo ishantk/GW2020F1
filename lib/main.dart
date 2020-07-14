@@ -36,5 +36,7 @@ import 'package:flutter/material.dart';
 // runApp function should take Object as Input which should be a widget returning MaterialApp Widget
 //void main() => runApp(NavDataApp());
 
-import 'package:gw2020f1/fooddeliveryapp/app.dart';
+//import 'package:gw2020f1/fooddeliveryapp/app.dart';
+
+import 'package:gw2020f1/gne/gne-app.dart';
 void main() => runApp(MyApp());
