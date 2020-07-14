@@ -38,5 +38,8 @@ import 'package:flutter/material.dart';
 
 //import 'package:gw2020f1/fooddeliveryapp/app.dart';
 
-import 'package:gw2020f1/gne/gne-app.dart';
+//import 'package:gw2020f1/gne/gne-app.dart';
+
+import 'package:gw2020f1/cloudfirestore/firestore-operations.dart';
+
 void main() => runApp(MyApp());
