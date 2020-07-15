@@ -10,7 +10,21 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       title: "Firestore DB Operations",
       //home: FirebaseOperationsWidget(),
-      home: FetchSingleDocWidget(),
+      home: FetchWidget(),
+    );
+  }
+}
+
+class FetchWidget extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+        title: Text("Firebase Operations"),
+    ),
+    body: Center(
+      child: FetchSingleDocWidget(),
+    )
     );
   }
 }
@@ -43,20 +57,33 @@ class FetchSingleDocWidget extends StatelessWidget{
     CollectionReference cRef = Firestore.instance.collection("users");
     final String docId = "9876512345";
 
-    return FutureBuilder(
+    return FutureBuilder<DocumentSnapshot>(
       future: cRef.document(docId).get(),
-      builder: (context, snapshot) {
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
 
         if (snapshot.hasError){
-          return Text("Something Went Wrong");
+          return Container(
+              child: Center(
+                  child: Text("Something Went Wrong")
+              ),
+          );
         }
 
+        // we have retrieved the data :)
         if (snapshot.connectionState == ConnectionState.done){
-          Map<String, dynamic> data = snapshot.data();
-          return Text("User Details: ${data['name']} ${data['age']}");
+          return Container(
+            child: Center(
+                child: Text("User Details: ${snapshot.data['name']} ${snapshot.data['age']}")
+            ),
+          );
         }
 
-        return Text("Fetching Data...");
+        return Container(
+          child: Center(
+              child: Text("Fetching Data...")
+          ),
+        );
+
       },
     );
   }
@@ -128,6 +155,9 @@ class FirebaseOperationsWidget extends StatelessWidget{
             RaisedButton(
               child: Text("Update User"),
               onPressed: updateUser,
+            ),
+            SizedBox(
+              height: 16.0,
             ),
             RaisedButton(
               child: Text("Delete User"),
