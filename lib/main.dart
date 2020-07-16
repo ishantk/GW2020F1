@@ -43,16 +43,20 @@ import 'package:flutter/material.dart';
 //import 'package:gw2020f1/cloudfirestore/firestore-operations.dart';
 
 
-import 'package:gw2020f1/fooddeliveryapp/register.dart';
+//import 'package:gw2020f1/fooddeliveryapp/register.dart';
+
+import 'package:gw2020f1/fooddeliveryapp/splash.dart';
+
 
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Food Delivery App",
-      home: RegisterPage(),
+      home: SplashPage(),
     );
   }
 }
+
 
 void main() => runApp(MyApp());

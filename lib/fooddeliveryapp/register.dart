@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart'; // Just a helper library may or may not be used
+import 'package:gw2020f1/fooddeliveryapp/user.dart';
 
 // FirebaseAuth is reference to Authentication Module of our Firebase Project
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -17,16 +18,25 @@ class RegisterPage extends StatefulWidget{
   RegisterPageState createState() => RegisterPageState();
 }
 
+enum Gender {
+  Male,
+  Female,
+}
+
 class RegisterPageState extends State<RegisterPage>{
 
   // keys are unique identifiers for the widgets
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool isRegistered; // by default null
   String message;    // by default null
+
+  Gender gender = Gender.Female;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +57,25 @@ class RegisterPageState extends State<RegisterPage>{
 
       body: Form(
         key: formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView( // Change the Column to ListView to Solve Your Problem
+          padding: EdgeInsets.all(16.0),
           children: <Widget>[
             SizedBox(height: 12.0,),
             Image.asset('assets/ic_login.png'),
             TextFormField(
+              decoration: InputDecoration(labelText: 'Enter Your Name'),
+              controller: nameController,
+              validator: (String value) {
+                if(value.isEmpty){
+                  return "Please Enter Your Name"; // here, we are returning back a message, hence validation is NOT OK
+                }
+                return null; // if we don't return anything, it means validation is OK
+              },
+            ),
+            TextFormField(
               decoration: InputDecoration(labelText: 'Enter Your Email'),
               controller: emailController,
+              keyboardType: TextInputType.emailAddress,
               validator: (String value) {
                 if(value.isEmpty){
                   return "Please Enter Your Email"; // here, we are returning back a message, hence validation is NOT OK
@@ -64,7 +84,22 @@ class RegisterPageState extends State<RegisterPage>{
                     return "Please Enter Valid Email";
                   }
                 }
-                return null; // if we dont return anything, it means validation is OK
+                return null; // if we don't return anything, it means validation is OK
+              },
+            ),
+            TextFormField(   // Input Type must be strictly Numbers
+              decoration: InputDecoration(labelText: 'Enter Your Phone'),
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              validator: (String value) {
+                if(value.isEmpty){
+                  return "Please Enter Your Phone"; // here, we are returning back a message, hence validation is NOT OK
+                }else{
+                  if(value.length!=10){
+                    return "Phone Number must be 10 digits";
+                  }
+                }
+                return null; // if we don't return anything, it means validation is OK
               },
             ),
             TextFormField(
@@ -81,6 +116,30 @@ class RegisterPageState extends State<RegisterPage>{
                 }
                 return null; // if we dont return anything, it means validation is OK
               },
+            ),
+            Column(
+               children: <Widget>[
+                  RadioListTile<Gender>(
+                    title: const Text("FEMALE"),
+                    value: Gender.Female,
+                    groupValue: gender,
+                    onChanged: (Gender value){
+                      setState(() {
+                        gender = value;
+                      });
+                    },
+                  ),
+                 RadioListTile<Gender>(
+                   title: const Text("MALE"),
+                   value: Gender.Male,
+                   groupValue: gender,
+                   onChanged: (Gender value){
+                     setState(() {
+                       gender = value;
+                     });
+                   },
+                 )
+               ],
             ),
             Container(
               padding: const EdgeInsets.all(16),
@@ -118,24 +177,33 @@ class RegisterPageState extends State<RegisterPage>{
     super.dispose();
   }
 
-  Future<void> addUser(String uid, String email, String password) async{
+  Future<void> addUser(String uid, User userData) async{
     print("Adding User to DataBase");
     CollectionReference cRef = Firestore.instance.collection("users");
-    cRef.document(uid).setData({'email':email, 'password':password})
-        .then((value) => print("User Added Successfully"))
+    cRef.document(uid).setData(userData.getUserMap())
+        .then((value) => print("User Added Successfully"))  // Use Navigator.push to take the user to HomePage
         .catchError((error) => print("Some Error Occurred while adding the User $error"));
   }
 
   // In the State of Widget
   void registerUserInFirebase() async{
+
+    User userData = User(
+      name: nameController.text,
+      phone: phoneController.text,
+      email: emailController.text,
+      gender: gender.toString(),
+      password: passwordController.text
+    );
+
     // Obtain Reference of the FirebaseUser which will be created in the FirebaseAuth Module inf Firebase Project
     FirebaseUser user = (await
                             auth.createUserWithEmailAndPassword(
-                              email: emailController.text,
-                              password: passwordController.text)
+                              email: userData.email,
+                              password: userData.password)
                         ).user;
 
-    await addUser(user.uid, emailController.text, passwordController.text);
+    await addUser(user.uid, userData);
 
     if(user != null){
       setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refresehd
@@ -162,14 +230,14 @@ class RegisterPageState extends State<RegisterPage>{
     ).user;
 
     if(user != null){
-      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refresehd
+      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
         // user is registered without any errors :)
         message = "User Signed In Successfully. Details: ${user.email} | ${user.uid}";
         isRegistered = true;
       });
 
     }else{
-      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refresehd
+      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
         // user isnt registered or some error    :(
         message = "User Not Signed In";
         isRegistered = false;

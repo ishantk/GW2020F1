@@ -119,7 +119,7 @@ class FirebaseOperationsWidget extends StatelessWidget{
       // We provide Document ID
 
       User user = User(name:"Fionna", email:"fionna@example.com", gender:"female", age:28, phone:"9809809809");
-      return cRef.document(user.phone).setData(user.getUserMap())
+      cRef.document(user.phone).setData(user.getUserMap())
       .then((value) => print("User Added Successfully"))
       .catchError((error) => print("Some Error Occurred while adding the User $error"));
     }
