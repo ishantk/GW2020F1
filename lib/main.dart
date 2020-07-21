@@ -45,7 +45,7 @@ import 'package:flutter/material.dart';
 
 //import 'package:gw2020f1/fooddeliveryapp/register.dart';
 
-import 'package:gw2020f1/fooddeliveryapp/splash.dart';
+import 'package:gw2020f1/ui/auth/splash.dart';
 
 
 class MyApp extends StatelessWidget{
