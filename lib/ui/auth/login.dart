@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gw2020f1/ui/auth/register.dart';
+import 'package:gw2020f1/ui/home/home.dart';
 
 // FirebaseAuth is reference to Authentication Module of our Firebase Project
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -138,11 +139,18 @@ class LoginPageState extends State<LoginPage>{
       // Use Navigator.push to take the user to HomePage
       // show circular Loading while Firebase is either logging in or registering the user in the background
 
-      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
+      /*setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
         // user is registered without any errors :)
         message = "User Signed In Successfully. Details: ${user.email} | ${user.uid}";
         isLoggedIn = true;
-      });
+      });*/
+
+      Navigator.push(   // startActivity()
+          context,
+          MaterialPageRoute( // Intent
+              builder: (context) => HomePage()
+          )
+      );
 
     }else{
       setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed

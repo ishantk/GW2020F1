@@ -20,5 +20,8 @@ class Utils{
   static const RESTAURANT_TAG_TRENDING = "trending";
   static const RESTAURANT_TAG_FAVOURITES = "favourites";
 
+  // COLLECTIONS
+  static const RESTAURANT_COLLECTION = "restaurants";
+
 
 }

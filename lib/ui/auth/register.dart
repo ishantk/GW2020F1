@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gw2020f1/model/user.dart';
+import 'package:gw2020f1/ui/home/home.dart';
 
 // FirebaseAuth is reference to Authentication Module of our Firebase Project
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -170,8 +171,23 @@ class RegisterPageState extends State<RegisterPage>{
   Future<void> addUser(String uid, User userData) async{
     print("Adding User to DataBase");
     CollectionReference cRef = Firestore.instance.collection("users");
+
+    /*Future<DocumentReference> doc = cRef.add(userData.toMap());
+    doc.then((value){
+      String docId = value.documentID;
+    });
+    */
+
     cRef.document(uid).setData(userData.toMap())
-        .then((value) => print("User Added Successfully"))  // Use Navigator.push to take the user to HomePage
+        .then((value) {
+            print("User Added Successfully");
+            Navigator.push(   // startActivity()
+                context,
+                MaterialPageRoute( // Intent
+                    builder: (context) => HomePage()
+                )
+            );
+        })  // Use Navigator.push to take the user to HomePage
         .catchError((error) => print("Some Error Occurred while adding the User $error"));
   }
 
