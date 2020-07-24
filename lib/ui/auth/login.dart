@@ -145,7 +145,7 @@ class LoginPageState extends State<LoginPage>{
         isLoggedIn = true;
       });*/
 
-      Navigator.push(   // startActivity()
+      Navigator.pushReplacement(   // startActivity()
           context,
           MaterialPageRoute( // Intent
               builder: (context) => HomePage()

@@ -22,6 +22,7 @@ class Utils{
 
   // COLLECTIONS
   static const RESTAURANT_COLLECTION = "restaurants";
+  static const DISH_COLLECTION = "dishes";
 
 
 }

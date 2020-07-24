@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gw2020f1/fooddeliveryapp/splash.dart';
 import 'package:gw2020f1/ui/restaurants/restaurants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth auth = FirebaseAuth.instance;
 
 class HomePage extends StatelessWidget{
 
@@ -72,6 +76,26 @@ class HomePageWidgetState extends State<HomePageWidget>{
     return Scaffold(
       body: Center(
         child: widgets.elementAt(index),
+      ),
+      appBar: AppBar(
+        title: Text("Home"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.lock_open),
+            tooltip: 'Logout',
+            onPressed: (){
+              // auth.signOut() -> removes the security token and firebase data from the app which firebase will save for the user
+              auth.signOut().then((value){
+                Navigator.pushReplacement(   // startActivity()
+                    context,
+                    MaterialPageRoute( // Intent
+                        builder: (context) => SplashPage()
+                    )
+                );
+              });
+            },
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar( // When we do not want floating action button, else it will overlap
         items: <BottomNavigationBarItem>[

@@ -181,7 +181,7 @@ class RegisterPageState extends State<RegisterPage>{
     cRef.document(uid).setData(userData.toMap())
         .then((value) {
             print("User Added Successfully");
-            Navigator.push(   // startActivity()
+            Navigator.pushReplacement(   // startActivity()
                 context,
                 MaterialPageRoute( // Intent
                     builder: (context) => HomePage()
@@ -208,6 +208,10 @@ class RegisterPageState extends State<RegisterPage>{
                               email: emailController.text,
                               password: passwordController.text)
                         ).user;
+
+    //    auth.createUserWithEmailAndPassword(email: null, password: null)
+    //        .then((value) => null)
+    //        .catchError(onError)
 
     await addUser(user.uid, userData);
 
