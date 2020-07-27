@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gw2020f1/ui/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gw2020f1/ui/home/home.dart';
+import 'package:gw2020f1/ui/home/filters.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -30,7 +31,7 @@ class SplashPage extends StatelessWidget{
             //Navigator.push(context,
             Navigator.pushReplacement(context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(),
+                  builder: (context) => HomePageWithFilters(),
                 )
             );
           });

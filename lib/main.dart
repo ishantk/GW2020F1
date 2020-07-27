@@ -49,11 +49,13 @@ import 'package:gw2020f1/gne/test-widget.dart';
 import 'package:gw2020f1/ui/auth/splash.dart';
 import 'package:gw2020f1/ui/restaurants/restaurants.dart';
 
+const String appName = "GW2020F1 - Food Delivery";
+
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Food Delivery App",
+      title: appName,
       home: SplashPage(),
     );
   }

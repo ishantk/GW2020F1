@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gw2020f1/model/restaurant.dart';
 import 'package:gw2020f1/model/util.dart';
 import 'package:gw2020f1/ui/restaurants/dishes.dart';
 
@@ -8,6 +9,7 @@ import 'package:gw2020f1/ui/restaurants/dishes.dart';
 final Firestore db = Firestore.instance;
 
 class RestaurantsPage extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
 
@@ -32,6 +34,8 @@ class RestaurantsPage extends StatelessWidget{
 
           // Presentation of All the Restaurants in the DataBase in restaurants collection
           return ListView(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
             padding: EdgeInsets.all(16.0),
             children: snapshot.data.documents.map((DocumentSnapshot document){
               /*return ListTile(
@@ -60,7 +64,10 @@ class RestaurantsPage extends StatelessWidget{
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(
-                          builder: (context) => DishesPage(restauranName: document.data['name'], restaurantId:document.documentID),
+                          builder: (context){
+                            //Restaurant restaurant = Restaurant.init();
+                            return DishesPage(restauranName: document.data['name'], restaurantId:document.documentID);
+                            }
                         )
                     );
                   },

@@ -58,9 +58,20 @@ class DishesPage extends StatelessWidget{
                     SizedBox(height: 2.0,),
                     Text(document.data['name'], style: TextStyle(fontSize: 24.0, color: Colors.amber),),
                     Divider(),
-                    Text(document.data['description'], style: TextStyle(fontSize: 14.0, color: Colors.black),),
-                    Text(document.data['price'].toString(), style: TextStyle(fontSize: 14.0, color: Colors.black),),
+                    Text(document.data['description'], style: TextStyle(fontSize: 16.0, color: Colors.black),),
+                    Text(document.data['price'].toString(), style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),
                     Divider(),
+                    RaisedButton(
+                      child: Text("ADD TO CART"),
+                      onPressed: (){
+                        // code yet
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          side: BorderSide(color: Colors.amber)
+                      ),
+                      color: Colors.white,
+                    )
                   ],
                 ),
               );
