@@ -35,7 +35,7 @@ class RestaurantsPage extends StatelessWidget{
           // Presentation of All the Restaurants in the DataBase in restaurants collection
           return ListView(
             shrinkWrap: true,
-            physics: ScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.all(16.0),
             children: snapshot.data.documents.map((DocumentSnapshot document){
               /*return ListTile(

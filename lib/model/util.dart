@@ -1,5 +1,7 @@
 class Utils{
 
+  static var UID;
+
   // DISH TAGS
   static const DISH_TAG_PANEER = "paneer";
   static const DISH_TAG_TANDOOR = "tandoor";
@@ -21,8 +23,10 @@ class Utils{
   static const RESTAURANT_TAG_FAVOURITES = "favourites";
 
   // COLLECTIONS
+  static const USERS_COLLECTION = "users";
   static const RESTAURANT_COLLECTION = "restaurants";
   static const DISH_COLLECTION = "dishes";
+  static const CART_COLLECTION = "cart";
 
 
 }

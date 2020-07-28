@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gw2020f1/model/util.dart';
 import 'package:gw2020f1/ui/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gw2020f1/ui/home/home.dart';
@@ -25,6 +26,7 @@ class SplashPage extends StatelessWidget{
         if (user != null){
           print("Firebase User Data is: $user");
           String uid = user.uid;
+          Utils.UID = uid;
           print("UID IS: $uid");
 
           Future.delayed(Duration(seconds: 1), (){
