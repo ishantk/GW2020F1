@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gw2020f1/login.dart';
-import 'package:gw2020f1/listview.dart';
+import 'package:gw2020f1/tutorials/login.dart';
+import 'package:gw2020f1/tutorials/listview.dart';
 
 class NavigationDrawerApp extends StatelessWidget{
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_counter/flutter_counter.dart';
+import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/gne/test-widget.dart';
 //import 'home.dart';
 //import 'login.dart';
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appName,
-      home: SplashPage(),
+      home: SplashPage()
     );
   }
 }

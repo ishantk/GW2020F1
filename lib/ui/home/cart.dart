@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_counter/flutter_counter.dart';
+import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/model/util.dart';
 
 // Firestore is reference to Cloud Firestore DataBase Module of our Firebase Project
@@ -53,20 +54,13 @@ class ShoppingCartPage extends StatelessWidget{
                     Text(document.data['description'], style: TextStyle(fontSize: 16.0, color: Colors.black),),
                     Text(document.data['price'].toString(), style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),
                     Divider(),
-                    Counter(
-                      initialValue: 1,
-                      minValue: 1,
-                      maxValue: 5,
-                      step: 1,
-                      decimalPlaces: 1,
-                      onChanged: (value) { // get the latest value from here
-
-                      },
-                    ),
+                    CounterWidget(dishDocumentId: document.documentID, dishPrice: document.data['price']),
                     RaisedButton(
                       child: Text("REMOVE"),
                       onPressed: (){
-
+                        cart.document(document.documentID).delete()
+                            .then((value) => print("Dish Deleted Successfully"))
+                            .catchError((error) => print("Some Error Occurred while Updating the User $error"));
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
