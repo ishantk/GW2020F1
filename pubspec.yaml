@@ -36,6 +36,7 @@ dependencies:
   cloud_firestore: ^0.12.9+5  # for accessing the database
   carousel_slider: ^2.2.1 # for slide show
   flutter_counter: ^1.0.3 # for + and - for the quantity of dish
+  connectivity: ^0.4.9    # to check if user is connected to internet or not
 
 dev_dependencies:
   flutter_test:

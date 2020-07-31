@@ -1,3 +1,5 @@
+import 'package:connectivity/connectivity.dart';
+
 class Utils{
 
   static var UID;
@@ -28,5 +30,9 @@ class Utils{
   static const DISH_COLLECTION = "dishes";
   static const CART_COLLECTION = "cart";
 
+  static checkInternetConnection() async{
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    return connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi;
+  }
 
 }

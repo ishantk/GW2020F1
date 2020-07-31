@@ -21,6 +21,22 @@ class ShoppingCartPage extends StatelessWidget{
 
       appBar: AppBar(
         title: Text("CART"),
+        actions: [
+            IconButton(
+              icon: const Icon(Icons.credit_card),
+              tooltip: 'Order',
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(
+                        builder: (context) {
+                          //Restaurant restaurant = Restaurant.init();
+                          return ShoppingCartPage();
+                        }
+                    )
+                );
+              },
+            )
+          ]
       ),
 
       body: StreamBuilder<QuerySnapshot>(

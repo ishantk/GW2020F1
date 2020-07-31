@@ -10,7 +10,7 @@ final Firestore db = Firestore.instance;
 class CounterWidget extends StatefulWidget {
 
   String dishDocumentId;
-  String dishPrice;
+  int dishPrice;
 
   CounterWidget({Key key, @required this.dishDocumentId, @required this.dishPrice}) : super(key: key);
 
@@ -29,7 +29,7 @@ class CounterWidgetState extends State<CounterWidget>{
       .collection(Utils.CART_COLLECTION);
 
   void updateDishQuantityInFirestore(){
-    cart.document(widget.dishDocumentId).updateData({"quantity":count, "price": (int.parse(widget.dishPrice)*count)})
+    cart.document(widget.dishDocumentId).updateData({"quantity":count, "price": (widget.dishPrice*count)})
         .then((value) => print("Dish Updated Successfully"))
         .catchError((error) => print("Some Error Occurred while Updating the User $error"));
   }
