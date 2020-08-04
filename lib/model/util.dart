@@ -29,6 +29,7 @@ class Utils{
   static const RESTAURANT_COLLECTION = "restaurants";
   static const DISH_COLLECTION = "dishes";
   static const CART_COLLECTION = "cart";
+  static const ORDER_COLLECTION = "orders";
 
   static checkInternetConnection() async{
     var connectivityResult = await (Connectivity().checkConnectivity());

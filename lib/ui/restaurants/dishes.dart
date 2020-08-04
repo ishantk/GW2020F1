@@ -80,6 +80,7 @@ class DishesPage extends StatelessWidget{
                             'name': document.data['name'],
                             'description': document.data['description'],
                             'price': document.data['price'],
+                            'restaurantId': restaurantId,
                             'quantity': 1,
                           };
 

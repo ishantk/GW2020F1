@@ -10,6 +10,7 @@ class Orders{
   int totalPrice;
   List<Dish> dishes;
 
+  Orders(){}
   Orders.init({this.userID, this.restaurantID, this.orderDateTime, this.totalPrice, this.dishes});
   Orders.initFromFirebase({this.userID, this.restaurantID, this.orderDateTime, this.totalPrice, this.dishes, this.documentID});
 

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gw2020f1/model/dish.dart';
+import 'package:gw2020f1/model/orders.dart';
 import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/model/util.dart';
 
@@ -8,7 +10,54 @@ import 'package:gw2020f1/model/util.dart';
 final Firestore db = Firestore.instance;
 final FirebaseAuth auth = FirebaseAuth.instance;
 
+Orders order = Orders();
+
+fetchDishesFromCartAndPlaceOrder() async{
+  
+  order.userID = Utils.UID;
+  order.orderDateTime = DateTime.now();
+  order.dishes = [];
+
+  db.collection(Utils.USERS_COLLECTION).document(Utils.UID).collection(Utils.CART_COLLECTION)
+      .getDocuments() // gives us a list of documents
+      .then((QuerySnapshot value){
+        List<DocumentSnapshot> docs = value.documents;
+
+        for(int i=0;i<docs.length;i++){
+          DocumentSnapshot document = docs[i];
+
+          Dish dish = Dish.initFromFirebase(name:document.data['name'], imageUrl: document.data['imageUrl'],
+              description: document.data['description'], price: document.data['price'],
+              quantity: document.data['quantity'], documentID: document.documentID);
+
+          order.dishes.add(dish);
+          order.totalPrice += dish.price;
+        }
+
+        db.collection(Utils.ORDER_COLLECTION).add(order.toMap())
+            .then((DocumentReference document){
+          print("Order Object Saved");
+        });
+
+      });
+}
+
+fetchUser(){
+  db.collection(Utils.USERS_COLLECTION).document(Utils.UID)
+      .get() // gives us a single document
+      .then((DocumentSnapshot document){
+        // extract document id
+        String docId  = document.documentID;
+        // read the document details
+        String name = document.data['name'];
+      });
+}
+
+
+
 class PlaceOrderPage extends StatelessWidget{
+
+
   @override
   Widget build(BuildContext context){
 
@@ -64,10 +113,13 @@ class PlaceOrderPage extends StatelessWidget{
                   }).toList(),
                 ),
               ),
+              Text("Total Price: ${order.totalPrice}"),
               RaisedButton(
                 child: Text("PLACE ORDER [COD]"),
                 onPressed: (){
-
+                  fetchDishesFromCartAndPlaceOrder();
+                  // Navigate the User to a New Page stating Order has been placed Successfully
+                  // Delete the Cart Collection Documents :)
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),

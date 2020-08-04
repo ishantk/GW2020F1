@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_counter/flutter_counter.dart';
+import 'package:gw2020f1/ui/order/place-order.dart';
 import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/model/util.dart';
 
@@ -29,8 +30,7 @@ class ShoppingCartPage extends StatelessWidget{
                 Navigator.push(context,
                     MaterialPageRoute(
                         builder: (context) {
-                          //Restaurant restaurant = Restaurant.init();
-                          return ShoppingCartPage();
+                          return PlaceOrderPage();
                         }
                     )
                 );
