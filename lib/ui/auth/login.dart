@@ -7,8 +7,6 @@ import 'package:gw2020f1/ui/home/home.dart';
 
 // Please Explore Connectivity Module for Subscriptions: https://pub.dev/packages/connectivity
 
-// FirebaseAuth is reference to Authentication Module of our Firebase Project
-final FirebaseAuth auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget{
 
@@ -16,6 +14,7 @@ class LoginPage extends StatefulWidget{
 
   @override
   LoginPageState createState() => LoginPageState();
+
 }
 
 class LoginPageState extends State<LoginPage>{
@@ -126,11 +125,18 @@ class LoginPageState extends State<LoginPage>{
                       alignment: Alignment.center,
                       child: RaisedButton(
                         child: const Text("Login"),
-                        onPressed: () async {
+                        onPressed: ()  {
                           if (formKey.currentState.validate()) {
-                            loginUserWithFirebase();
                             setState(() {
                               status = 1;
+                            });
+                            Future<FirebaseUser> future = loginUserWithFirebase(context, emailController.text, passwordController.text);
+                            future.then((FirebaseUser user){
+                              if(user!=null){
+                                navigateToHome(context);
+                              }else{
+
+                              }
                             });
                           }
                         },
@@ -175,42 +181,35 @@ class LoginPageState extends State<LoginPage>{
     super.dispose();
   }
 
-  // In the State of Widget
-  void loginUserWithFirebase() async{
-    // Obtain Reference of the FirebaseUser which will be created in the FirebaseAuth Module inf Firebase Project
-    FirebaseUser user = (await
-    auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text)
-    ).user;
+}
 
-    if(user != null){
+navigateToHome(BuildContext context){
+  Navigator.pushReplacement(   // startActivity()
+      context,
+      MaterialPageRoute( // Intent
+          builder: (context) => HomePage()
+      )
+  );
+}
 
-      // take the user directly to the Home
-      // Use Navigator.push to take the user to HomePage
-      // show circular Loading while Firebase is either logging in or registering the user in the background
+// In the State of Widget
+loginUserWithFirebase(BuildContext context, email, password){
 
-      /*setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
-        // user is registered without any errors :)
-        message = "User Signed In Successfully. Details: ${user.email} | ${user.uid}";
-        isLoggedIn = true;
-      });*/
+  // FirebaseAuth is reference to Authentication Module of our Firebase Project
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
-      Navigator.pushReplacement(   // startActivity()
-          context,
-          MaterialPageRoute( // Intent
-              builder: (context) => HomePage()
-          )
-      );
-
-    }else{
-      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
-        // user isnt registered or some error    :(
-        message = "User Not Signed In";
-        isLoggedIn = false;
-        //status = 2; handling is upto us
-      });
-    }
-  }
-
+  // Obtain Reference of the FirebaseUser which will be created in the FirebaseAuth Module inf Firebase Project
+  auth.signInWithEmailAndPassword(email: email, password: password)
+      .then((AuthResult result){
+    FirebaseUser user = result.user;
+    return user;
+//    }else{
+//      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
+//        // user isnt registered or some error    :(
+//        message = "User Not Signed In";
+//        isLoggedIn = false;
+//        //status = 2; handling is upto us
+//      });
+//    }
+  });
 }

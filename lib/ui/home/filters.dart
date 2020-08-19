@@ -22,7 +22,7 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return /*Scaffold(
       appBar: AppBar(title: Text("Home Page"),
           actions: [
             IconButton(
@@ -41,7 +41,8 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
             )
           ]
       ),
-      body: ListView(
+      body: */
+     ListView(
         padding: EdgeInsets.all(8.0),
         scrollDirection: Axis.vertical,
         children: [
@@ -208,7 +209,7 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
             },
           )
         ],
-      ),
-    );
+      );
+    //);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gw2020f1/fooddeliveryapp/splash.dart';
+import 'package:gw2020f1/ui/home/filters.dart';
 import 'package:gw2020f1/ui/restaurants/restaurants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -48,7 +49,8 @@ class HomePageWidgetState extends State<HomePageWidget>{
 
   static List<Widget> widgets = [
     // 0
-    RestaurantsPage(),
+    //RestaurantsPage(),
+    HomePageWithFilters(),
     // 1
     Text(
         "Start Searching Your Music",

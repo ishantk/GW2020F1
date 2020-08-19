@@ -1,5 +1,14 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+
+
 import 'package:flutter_counter/flutter_counter.dart';
+import 'package:gw2020f1/ui/navigation-with-animation.dart';
+import 'package:gw2020f1/ui/profile/capture-image.dart';
+import 'package:gw2020f1/ui/profile/manage-addresses.dart';
+import 'package:gw2020f1/ui/profile/user-profile.dart';
 import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/gne/test-widget.dart';
 //import 'home.dart';
@@ -58,9 +67,28 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appName,
-      home: SplashPage()
+      debugShowCheckedModeBanner: false,
+      home: SplashPage(),
+      routes: {
+        "/capture": (context) => CaptureImageFromCamera(),
+        "/user-profile": (context) => UserProfile(),
+        "/manage-address": (context) => AddressPage(),
+        "/manage-profile": (context) => ProfilePage(),
+      },
     );
   }
 }
 
-void main() => runApp(MyApp());
+void main(){
+
+  // In Released Mode, If any error occurs, app will close
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    if (kReleaseMode) {
+      exit(1);
+    }
+  };
+
+  runApp(MyApp());
+
+}

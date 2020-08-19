@@ -37,6 +37,10 @@ dependencies:
   carousel_slider: ^2.2.1 # for slide show
   flutter_counter: ^1.0.3 # for + and - for the quantity of dish
   connectivity: ^0.4.9    # to check if user is connected to internet or not
+  characters: ^1.0.0      # for upgraded flutter versions -> strings are characters only
+  camera: ^0.5.8+5        # dependencies needed for image capture on device
+  path_provider: ^1.6.11
+  path: ^1.7.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +67,7 @@ flutter:
     - assets/john.jpeg
     - assets/tripleh.jpeg
     - assets/batista.jpg
+    - assets/images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
