@@ -5,8 +5,12 @@ class ProfilePage extends StatefulWidget{
 }
 
 class ProfilePageState extends State<ProfilePage>{
+
+
   @override
   Widget build(BuildContext context) {
+
+    //var argumnet = ModalRoute.of(context).settings.arguments;
 
   }
 

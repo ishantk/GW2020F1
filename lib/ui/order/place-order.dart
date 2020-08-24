@@ -23,6 +23,18 @@ fetchDishesFromCartAndPlaceOrder() async{
       .then((QuerySnapshot value){
         List<DocumentSnapshot> docs = value.documents;
 
+        /* Lambda Expression
+        docs.forEach((DocumentSnapshot document) {
+
+        });
+        */
+
+        // Enhanced for loop
+        /*for(DocumentSnapshot document in docs){
+
+        }*/
+
+        // Traditional For loop
         for(int i=0;i<docs.length;i++){
           DocumentSnapshot document = docs[i];
 
@@ -37,6 +49,8 @@ fetchDishesFromCartAndPlaceOrder() async{
         db.collection(Utils.ORDER_COLLECTION).add(order.toMap())
             .then((DocumentReference document){
           print("Order Object Saved");
+          String id = document.documentID;
+          db.collection(Utils.ORDER_COLLECTION).document(id).collection("dishes");
         });
 
       });
