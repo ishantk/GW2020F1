@@ -1,15 +1,33 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gw2020f1/model/util.dart';
 import 'package:gw2020f1/ui/order/my-orders.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserProfile extends StatefulWidget {
   createState() => UserProfileState();
 }
 
+uploadImageToFirebaseStorage(File image) async{
+  StorageReference storage = FirebaseStorage.instance.ref();
+  StorageReference profilePicsStorage = storage.child("profile-pics/");
+  StorageUploadTask uploadTask = profilePicsStorage.child("profile_pic_${Utils.UID}.jpg").putFile(image);
+
+  if(uploadTask.isSuccessful){
+    String profileImageURL = await profilePicsStorage.getDownloadURL();
+    // Edit User Document fo the URL in Profile in FirebaseFirestore :)
+  }
+
+}
+
 class UserProfileState extends State<UserProfile> {
-  
-  
+
+  File imageFile;
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -22,6 +40,7 @@ class UserProfileState extends State<UserProfile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
+                //child: Image.file(imageFile)
                 backgroundImage: AssetImage('assets/john.jpeg'),
                 radius: 100,
               ),
@@ -34,6 +53,8 @@ class UserProfileState extends State<UserProfile> {
             ],
           ),
           onTap: () async {
+
+            /*
             // When libraries have been initialized execute below code
             WidgetsFlutterBinding.ensureInitialized();
             // first camera and second camera
@@ -43,7 +64,11 @@ class UserProfileState extends State<UserProfile> {
             final camera = cameras[1]; // front
 
             String imagePath = await Navigator.pushNamed(context, "/capture", arguments: camera);
+            */
 
+            imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+            setState(() {});// ImageSource.camera
+            // Display the image ->  Image.file(File(imagePath)),
           },
         )),
         ListTile(
