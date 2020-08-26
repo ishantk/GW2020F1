@@ -31,7 +31,7 @@ class Utils{
   static const CART_COLLECTION = "cart";
   static const ORDER_COLLECTION = "orders";
 
-  static checkInternetConnection() async{
+  static Future<bool> checkInternetConnection() async{
     var connectivityResult = await (Connectivity().checkConnectivity());
     return connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi;
   }

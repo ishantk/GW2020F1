@@ -30,10 +30,23 @@ class LoginPageState extends State<LoginPage>{
 
   int status = 0;
 
+  bool internetStatus = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Utils.checkInternetConnection().then((bool value){
+      internetStatus = value;
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    if (Utils.checkInternetConnection()){
+
+    if (!internetStatus){
       return Scaffold(
           appBar: AppBar(
             title: Text(widget.title),
@@ -44,7 +57,10 @@ class LoginPageState extends State<LoginPage>{
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.wifi, color: Colors.amber,),
-                Text("Seems you are Not Connected to Internet\nPlease Connect and try Again !!", style:TextStyle(fontSize: 24.0, color: Colors.lightBlue))
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text("Seems you are Not Connected to Internet\nPlease Connect and try Again !!", style:TextStyle(fontSize: 24.0, color: Colors.lightBlue))
+                )
               ],
             ),
           )

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gw2020f1/fooddeliveryapp/splash.dart';
 import 'package:gw2020f1/ui/home/filters.dart';
+import 'package:gw2020f1/ui/profile/user-profile.dart';
 import 'package:gw2020f1/ui/restaurants/restaurants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -57,10 +58,7 @@ class HomePageWidgetState extends State<HomePageWidget>{
         style: myTextStyle
     ),
     // 2
-    Text(
-        "Manage Your Play Lists",
-        style: myTextStyle
-    ),
+    UserProfile()
   ];
 
   // User Defined Function, but input strictly must be integer as it is suppose to be the index

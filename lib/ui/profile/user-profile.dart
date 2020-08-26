@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,10 @@ class UserProfile extends StatefulWidget {
   createState() => UserProfileState();
 }
 
-uploadImageToFirebaseStorage(File image) async{
+uploadImageToFirebaseStorage(String path) async{
+
+  File image = File(path);
+
   StorageReference storage = FirebaseStorage.instance.ref();
   StorageReference profilePicsStorage = storage.child("profile-pics/");
   StorageUploadTask uploadTask = profilePicsStorage.child("profile_pic_${Utils.UID}.jpg").putFile(image);
@@ -20,6 +24,11 @@ uploadImageToFirebaseStorage(File image) async{
   if(uploadTask.isSuccessful){
     String profileImageURL = await profilePicsStorage.getDownloadURL();
     // Edit User Document fo the URL in Profile in FirebaseFirestore :)
+    print("Image Uploaded");
+
+    Firestore db = Firestore.instance;
+    db.collection("users").document(Utils.UID).setData({"imageURL": profileImageURL});
+
   }
 
 }
@@ -66,9 +75,12 @@ class UserProfileState extends State<UserProfile> {
             String imagePath = await Navigator.pushNamed(context, "/capture", arguments: camera);
             */
 
-            imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-            setState(() {});// ImageSource.camera
+            //imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+            PickedFile pickedFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+            //setState(() {});// ImageSource.camera
             // Display the image ->  Image.file(File(imagePath)),
+
+            uploadImageToFirebaseStorage(pickedFile.path);
           },
         )),
         ListTile(

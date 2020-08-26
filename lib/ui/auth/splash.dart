@@ -41,7 +41,7 @@ class SplashPage extends StatelessWidget {
     checkFirebaseAuth().then((value){
       if(value==1){
         navigate(context, HomePage());
-      }else{
+      }else if(value == 0){
         navigate(context, LoginPage());
       }
     });
