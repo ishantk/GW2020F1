@@ -35,16 +35,15 @@ class LoginPageState extends State<LoginPage>{
   @override
   void initState() {
     super.initState();
-
     Utils.checkInternetConnection().then((bool value){
-      internetStatus = value;
+      setState(() {
+        internetStatus = value;
+      });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
 
     if (!internetStatus){
       return Scaffold(

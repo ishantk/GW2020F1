@@ -16,12 +16,29 @@ class HomePageWithFilters extends StatefulWidget {
   }
 }
 
+// Referral Documentation: https://firebase.google.com/docs/firestore/query-data/queries
+
+fetchRestaurantsWithFilter(String filter){
+  Firestore db = Firestore.instance;
+  // where condition -> we will gert all the documents which are having name as Jacks Cafe
+  //  db.collection(Utils.RESTAURANT_COLLECTION).where("name", isEqualTo: "Jacks Cafe").snapshots()
+
+  if(filter.isEmpty){
+   return db.collection(Utils.RESTAURANT_COLLECTION).snapshots();
+  }else {
+    return db.collection(Utils.RESTAURANT_COLLECTION).where(
+        "categories", arrayContains: filter).snapshots();
+  }
+}
+
 class HomePageWithFiltersState extends State<HomePageWithFilters> {
 
   CollectionReference restaurants = db.collection(Utils.RESTAURANT_COLLECTION);
+  String filter = "";
 
   @override
   Widget build(BuildContext context) {
+
     return /*Scaffold(
       appBar: AppBar(title: Text("Home Page"),
           actions: [
@@ -64,7 +81,9 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-
+                    setState(() {
+                      filter = Utils.RESTAURANT_CATEGORY_VEG;
+                    });
                   },
                 ),
                 Padding(padding: EdgeInsets.all(6.0),),
@@ -149,7 +168,7 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
           HomePageSlider(),
           SizedBox(height: 4.0,),
           StreamBuilder<QuerySnapshot>(
-            stream: restaurants.snapshots(),
+            stream: fetchRestaurantsWithFilter(filter),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
               if(snapshot.hasError){

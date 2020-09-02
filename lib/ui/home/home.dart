@@ -8,35 +8,35 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-class HomePage extends StatelessWidget{
+//class HomePage extends StatelessWidget{
+//
+//  // static is property of class and not of object
+//  // Hence, without creating object we can access it with class name
+//  static const String title = "Welcome";
+//
+//  @override
+//  Widget build(BuildContext context) {
+//
+//    return MaterialApp(
+//      title: title,
+//      home: HomePageWidget(),
+//    );
+//
+//  }
+//
+//}
 
-  // static is property of class and not of object
-  // Hence, without creating object we can access it with class name
-  static const String title = "Welcome";
-
-  @override
-  Widget build(BuildContext context) {
-
-    return MaterialApp(
-      title: title,
-      home: HomePageWidget(),
-    );
-
-  }
-
-}
-
-class HomePageWidget extends StatefulWidget{
+class HomePage extends StatefulWidget{
 
   // Create Constructor with the key and pass it to super
-  HomePageWidget({Key key}) : super(key: key);
+  HomePage({Key key}) : super(key: key);
 
   @override
-  HomePageWidgetState createState() => HomePageWidgetState();
+  HomePageState createState() => HomePageState();
 
 }
 
-class HomePageWidgetState extends State<HomePageWidget>{
+class HomePageState extends State<HomePage>{
 
   int index = 0;
 

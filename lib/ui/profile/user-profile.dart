@@ -19,15 +19,17 @@ uploadImageToFirebaseStorage(String path) async{
 
   StorageReference storage = FirebaseStorage.instance.ref();
   StorageReference profilePicsStorage = storage.child("profile-pics/");
-  StorageUploadTask uploadTask = profilePicsStorage.child("profile_pic_${Utils.UID}.jpg").putFile(image);
+  StorageTaskSnapshot snapshot = await profilePicsStorage.child("profile_pic_${Utils.UID}.jpg").putFile(image).onComplete;
 
-  if(uploadTask.isSuccessful){
-    String profileImageURL = await profilePicsStorage.getDownloadURL();
+  if(snapshot.error==null){
+    String profileImageURL = await snapshot.ref.getDownloadURL();
     // Edit User Document fo the URL in Profile in FirebaseFirestore :)
-    print("Image Uploaded");
+    print("Image Uploaded and UID is: ${Utils.UID}");
 
     Firestore db = Firestore.instance;
-    db.collection("users").document(Utils.UID).setData({"imageURL": profileImageURL});
+    db.collection("users").document(Utils.UID).updateData({"imageURL": profileImageURL}).then((value){
+      print("URL Updated");
+    });
 
   }
 
