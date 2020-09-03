@@ -241,6 +241,7 @@ class RegisterPageState extends State<RegisterPage>{
 
     if(user != null){
       setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(),));
         // user is registered without any errors :)
         message = "User Signed In Successfully. Details: ${user.email} | ${user.uid}";
         isRegistered = true;

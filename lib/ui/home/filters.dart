@@ -98,7 +98,9 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-
+                    setState(() {
+                      filter = Utils.RESTAURANT_CATEGORY_NONVEG;
+                    });
                   },
                 ),
                 Padding(padding: EdgeInsets.all(6.0),),
@@ -113,7 +115,9 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-
+                    setState(() {
+                      filter = Utils.RESTAURANT_CATEGORY_NORTH;
+                    });
                   },
                 ),
                 Padding(padding: EdgeInsets.all(6.0),),
@@ -128,7 +132,9 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-
+                    setState(() {
+                      filter = Utils.RESTAURANT_CATEGORY_SOUTH;
+                    });
                   },
                 ),
                 Padding(padding: EdgeInsets.all(6.0),),
@@ -143,7 +149,9 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-
+                    setState(() {
+                      filter = Utils.RESTAURANT_CATEGORY_CHINESE;
+                    });
                   },
                 ),
                 Padding(padding: EdgeInsets.all(6.0),),
@@ -158,7 +166,9 @@ class HomePageWithFiltersState extends State<HomePageWithFilters> {
                   ),
                   color: Colors.white,
                   onPressed: () {
-
+                    setState(() {
+                      filter = Utils.RESTAURANT_CATEGORY_ITALIAN;
+                    });
                   },
                 )
               ],

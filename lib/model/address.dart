@@ -1,3 +1,6 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Address{
 
   // Attributes
@@ -7,6 +10,7 @@ class Address{
   String state;
   int zipCode;
   String label;
+  GeoPoint geoPoint;
 
   // Having a named Constructor can help us to create an Address Object with default constructor i.e. passing no data in the input while object construction
   Address.init({this.adrsLine, this.city, this.state, this.zipCode, this.label});
@@ -28,6 +32,7 @@ class Address{
       'state': this.state,
       'zipCode': this.zipCode,
       'label': this.label,
+      'location': this.geoPoint,
     };
   }
 }

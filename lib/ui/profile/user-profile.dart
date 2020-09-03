@@ -2,16 +2,14 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gw2020f1/fooddeliveryapp/splash.dart';
 import 'package:gw2020f1/model/util.dart';
 import 'package:gw2020f1/ui/order/my-orders.dart';
 import 'package:image_picker/image_picker.dart';
-
-class UserProfile extends StatefulWidget {
-  createState() => UserProfileState();
-}
 
 uploadImageToFirebaseStorage(String path) async{
 
@@ -30,9 +28,11 @@ uploadImageToFirebaseStorage(String path) async{
     db.collection("users").document(Utils.UID).updateData({"imageURL": profileImageURL}).then((value){
       print("URL Updated");
     });
-
   }
+}
 
+class UserProfile extends StatefulWidget {
+  createState() => UserProfileState();
 }
 
 class UserProfileState extends State<UserProfile> {
@@ -64,7 +64,6 @@ class UserProfileState extends State<UserProfile> {
             ],
           ),
           onTap: () async {
-
             /*
             // When libraries have been initialized execute below code
             WidgetsFlutterBinding.ensureInitialized();
@@ -141,6 +140,27 @@ class UserProfileState extends State<UserProfile> {
             Navigator.push(context, route);
           },
         ),
+        ListTile(
+          leading: Icon(Icons.account_circle),
+          title: Text(
+            "Logout",
+            style: TextStyle(fontSize: 18.0),
+          ),
+          subtitle:
+          Text("Logout from the App", style: TextStyle(fontSize: 16.0)),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: (){
+            FirebaseAuth auth = FirebaseAuth.instance;
+            auth.signOut().then((value){
+              Navigator.pushReplacement(   // startActivity()
+                  context,
+                  MaterialPageRoute( // Intent
+                      builder: (context) => SplashPage()
+                  )
+              );
+            });
+          },
+        )
       ],
     );
   }

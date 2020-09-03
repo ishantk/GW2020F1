@@ -145,14 +145,7 @@ class LoginPageState extends State<LoginPage>{
                             setState(() {
                               status = 1;
                             });
-                            Future<FirebaseUser> future = loginUserWithFirebase(context, emailController.text, passwordController.text);
-                            future.then((FirebaseUser user){
-                              if(user!=null){
-                                navigateToHome(context);
-                              }else{
-
-                              }
-                            });
+                            loginUserWithFirebase(context, emailController.text, passwordController.text);
                           }
                         },
                       ),
@@ -198,14 +191,6 @@ class LoginPageState extends State<LoginPage>{
 
 }
 
-navigateToHome(BuildContext context){
-  Navigator.pushReplacement(   // startActivity()
-      context,
-      MaterialPageRoute( // Intent
-          builder: (context) => HomePage()
-      )
-  );
-}
 
 // In the State of Widget
 loginUserWithFirebase(BuildContext context, email, password){
@@ -217,6 +202,9 @@ loginUserWithFirebase(BuildContext context, email, password){
   auth.signInWithEmailAndPassword(email: email, password: password)
       .then((AuthResult result){
     FirebaseUser user = result.user;
+    if(user!=null){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage(),));
+    }
     return user;
 //    }else{
 //      setState(() { // Re-Draw the UI with updated Data i.e. Change in Data leads to Change in State of the Widget and Hence UI must be Refreshed

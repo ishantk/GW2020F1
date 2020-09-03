@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gw2020f1/fooddeliveryapp/splash.dart';
+import 'package:gw2020f1/ui/home/cart.dart';
 import 'package:gw2020f1/ui/home/filters.dart';
 import 'package:gw2020f1/ui/profile/user-profile.dart';
 import 'package:gw2020f1/ui/restaurants/restaurants.dart';
@@ -81,18 +82,15 @@ class HomePageState extends State<HomePage>{
         title: Text("Home"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.lock_open),
-            tooltip: 'Logout',
+            icon: const Icon(Icons.shopping_cart),
+            tooltip: 'CART',
             onPressed: (){
-              // auth.signOut() -> removes the security token and firebase data from the app which firebase will save for the user
-              auth.signOut().then((value){
-                Navigator.pushReplacement(   // startActivity()
-                    context,
-                    MaterialPageRoute( // Intent
-                        builder: (context) => SplashPage()
-                    )
-                );
-              });
+              Navigator.push(   // startActivity()
+                  context,
+                  MaterialPageRoute( // Intent
+                      builder: (context) => ShoppingCartPage()
+                  )
+              );
             },
           )
         ],
