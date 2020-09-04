@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gw2020f1/model/util.dart';
+import 'package:gw2020f1/ui/home/cart.dart';
 
 // Firestore is reference to Cloud Firestore DataBase Module of our Firebase Project
 final Firestore db = Firestore.instance;
@@ -33,6 +34,20 @@ class DishesPage extends StatelessWidget{
 
       appBar: AppBar(
         title: Text(restauranName),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            tooltip: 'CART',
+            onPressed: (){
+              Navigator.push(   // startActivity()
+                  context,
+                  MaterialPageRoute( // Intent
+                      builder: (context) => ShoppingCartPage()
+                  )
+              );
+            },
+          )
+        ],
       ),
 
       body: StreamBuilder<QuerySnapshot>(
@@ -80,6 +95,7 @@ class DishesPage extends StatelessWidget{
                             'name': document.data['name'],
                             'description': document.data['description'],
                             'price': document.data['price'],
+                            'totalPrice': document.data['price'],
                             'restaurantId': restaurantId,
                             'quantity': 1,
                           };

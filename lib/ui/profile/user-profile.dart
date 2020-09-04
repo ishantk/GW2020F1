@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gw2020f1/fooddeliveryapp/splash.dart';
+import 'package:gw2020f1/fooddeliveryapp/user.dart';
 import 'package:gw2020f1/model/util.dart';
 import 'package:gw2020f1/ui/order/my-orders.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,6 +30,14 @@ uploadImageToFirebaseStorage(String path) async{
       print("URL Updated");
     });
   }
+
+  return true;
+}
+
+Future<Map<String, dynamic>> fetchUserDetails() async{
+  Firestore db = Firestore.instance;
+  DocumentSnapshot documentSnapshot = await db.collection(Utils.USERS_COLLECTION).document(Utils.UID).get();
+  return documentSnapshot.data;
 }
 
 class UserProfile extends StatefulWidget {
@@ -38,6 +47,24 @@ class UserProfile extends StatefulWidget {
 class UserProfileState extends State<UserProfile> {
 
   File imageFile;
+
+  String name = "";
+  String email = "";
+  String imageURL = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchUserDetails().then((Map<String, dynamic> map){
+      setState(() {
+        name = map['name'];
+        email = map['email'];
+        imageURL = map['imageURL'];
+      });
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +79,15 @@ class UserProfileState extends State<UserProfile> {
             children: [
               CircleAvatar(
                 //child: Image.file(imageFile)
-                backgroundImage: AssetImage('assets/john.jpeg'),
+                backgroundImage: imageURL == null ? AssetImage('assets/john.jpeg') : NetworkImage(imageURL),
                 radius: 100,
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
               ),
               Divider(),
-              Text("User Name"),
-              Text("Email"),
+              Text(name),
+              Text(email),
             ],
           ),
           onTap: () async {

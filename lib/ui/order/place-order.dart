@@ -11,7 +11,7 @@ final Firestore db = Firestore.instance;
 final FirebaseAuth auth = FirebaseAuth.instance;
 
 Orders order = Orders();
-
+/*
 fetchDishesFromCartAndPlaceOrder() async{
   
   order.userID = Utils.UID;
@@ -55,93 +55,78 @@ fetchDishesFromCartAndPlaceOrder() async{
 
       });
 }
+*/
 
-fetchUser(){
-  db.collection(Utils.USERS_COLLECTION).document(Utils.UID)
-      .get() // gives us a single document
-      .then((DocumentSnapshot document){
-        // extract document id
-        String docId  = document.documentID;
-        // read the document details
-        String name = document.data['name'];
-      });
-}
-
-
-
-class PlaceOrderPage extends StatelessWidget{
-
+class PlaceOrderPage extends StatelessWidget {
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
 
-    CollectionReference cart = db.collection(Utils.USERS_COLLECTION)
+    CollectionReference cart = db
+        .collection(Utils.USERS_COLLECTION)
         .document(Utils.UID)
         .collection(Utils.CART_COLLECTION);
 
     return Scaffold(
-
       appBar: AppBar(
-          title: Text("Place Order"),
+        title: Text("Place Order"),
       ),
-
       body: StreamBuilder<QuerySnapshot>(
         stream: cart.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
-          if(snapshot.hasError){
+          if (snapshot.hasError) {
             return Center(
               child: Text("Something Went Wrong. Please Try Again"),
             );
           }
 
-          if(snapshot.connectionState == ConnectionState.waiting){
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: Text("Please Wait..."),
+              child: CircularProgressIndicator(),
             );
           }
 
           // Presentation of All the Restaurants in the DataBase in restaurants collection
-          return Column(
-            children: [
-              Container(
-                height: 400,
-                child: ListView(
-                  padding: EdgeInsets.all(16.0),
-                  children: snapshot.data.documents.map((DocumentSnapshot document){
-                    return Container(
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          Image.network(document.data['imageUrl']),
-                          SizedBox(height: 2.0,),
-                          Text(document.data['name'], style: TextStyle(fontSize: 24.0, color: Colors.amber),),
-                          Divider(),
-                          Text(document.data['description'], style: TextStyle(fontSize: 16.0, color: Colors.black),),
-                          Text(document.data['price'].toString(), style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),
-                          Divider(),
-                        ],
-                      ),
-                    );
-
-                  }).toList(),
+          return ListView(
+            padding: EdgeInsets.all(16.0),
+            children: snapshot.data.documents.map((DocumentSnapshot document) {
+              print("document: ${document.data.toString()}");
+              return Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Image.network(document.data['imageUrl']),
+                    SizedBox(
+                      height: 2.0,
+                    ),
+                    Text(
+                      document.data['name'],
+                      style: TextStyle(fontSize: 24.0, color: Colors.amber),
+                    ),
+                    Divider(),
+                    Text(
+                      document.data['description'],
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
+                    ),
+                    Text(
+                      document.data['price'].toString(),
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Divider(),
+                    Text(
+                      "Total ${document.data['totalPrice'].toString()}",
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-              ),
-              Text("Total Price: ${order.totalPrice}"),
-              RaisedButton(
-                child: Text("PLACE ORDER [COD]"),
-                onPressed: (){
-                  fetchDishesFromCartAndPlaceOrder();
-                  // Navigate the User to a New Page stating Order has been placed Successfully
-                  // Delete the Cart Collection Documents :)
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(color: Colors.amber)
-                ),
-                color: Colors.white,
-              )
-            ],
+              );
+            }).toList(),
           );
         },
       ),

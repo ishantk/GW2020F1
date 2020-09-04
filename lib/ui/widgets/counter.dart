@@ -29,7 +29,8 @@ class CounterWidgetState extends State<CounterWidget>{
       .collection(Utils.CART_COLLECTION);
 
   void updateDishQuantityInFirestore(){
-    cart.document(widget.dishDocumentId).updateData({"quantity":count, "price": (widget.dishPrice*count)})
+
+    cart.document(widget.dishDocumentId).updateData({"quantity":count, "totalPrice": (widget.dishPrice*count)})
         .then((value) => print("Dish Updated Successfully"))
         .catchError((error) => print("Some Error Occurred while Updating the User $error"));
   }

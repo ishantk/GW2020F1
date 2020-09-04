@@ -71,6 +71,7 @@ class ShoppingCartPage extends StatelessWidget{
                     Text(document.data['price'].toString(), style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),
                     Divider(),
                     CounterWidget(dishDocumentId: document.documentID, dishPrice: document.data['price']),
+                    Text("Total ${document.data['totalPrice'].toString()}", style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),
                     RaisedButton(
                       child: Text("REMOVE"),
                       onPressed: (){
