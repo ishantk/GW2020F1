@@ -10,9 +10,11 @@ import 'package:gw2020f1/model/util.dart';
 final Firestore db = Firestore.instance;
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-Orders order = Orders();
-/*
-fetchDishesFromCartAndPlaceOrder() async{
+
+
+Future<String> fetchDishesFromCartAndPlaceOrder() async{
+
+  Orders order = Orders();
   
   order.userID = Utils.UID;
   order.orderDateTime = DateTime.now();
@@ -22,6 +24,8 @@ fetchDishesFromCartAndPlaceOrder() async{
       .getDocuments() // gives us a list of documents
       .then((QuerySnapshot value){
         List<DocumentSnapshot> docs = value.documents;
+
+        order.restaurantID = docs[0]['restaurantId'];
 
         /* Lambda Expression
         docs.forEach((DocumentSnapshot document) {
@@ -49,15 +53,23 @@ fetchDishesFromCartAndPlaceOrder() async{
         db.collection(Utils.ORDER_COLLECTION).add(order.toMap())
             .then((DocumentReference document){
           print("Order Object Saved");
-          String id = document.documentID;
-          db.collection(Utils.ORDER_COLLECTION).document(id).collection("dishes");
+          return "Order Placed";
+          // TODO: Delete The Documents from the Cart
+          //db.collection(Utils.USERS_COLLECTION).document(Utils.UID).collection("cart")
+
         });
 
       });
 }
-*/
 
-class PlaceOrderPage extends StatelessWidget {
+class PlaceOrderPage extends StatefulWidget {
+  @override
+  _PlaceOrderPageState createState() => _PlaceOrderPageState();
+}
+
+class _PlaceOrderPageState extends State<PlaceOrderPage> {
+
+  String message = "";
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +121,13 @@ class PlaceOrderPage extends StatelessWidget {
                       style: TextStyle(fontSize: 16.0, color: Colors.black),
                     ),
                     Text(
+                      "Quantity: ${document.data['quantity']}",
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       document.data['price'].toString(),
                       style: TextStyle(
                           fontSize: 18.0,
@@ -129,6 +148,17 @@ class PlaceOrderPage extends StatelessWidget {
             }).toList(),
           );
         },
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: RaisedButton(
+          child: Text("CONFIRM ORDER"),
+          onPressed: () async {
+            //message = "INPROCESS";
+            //message = await fetchDishesFromCartAndPlaceOrder();
+            fetchDishesFromCartAndPlaceOrder();
+          },
+        ),
       ),
     );
   }

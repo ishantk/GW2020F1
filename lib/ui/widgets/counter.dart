@@ -11,8 +11,9 @@ class CounterWidget extends StatefulWidget {
 
   String dishDocumentId;
   int dishPrice;
+  int initialQuantity;
 
-  CounterWidget({Key key, @required this.dishDocumentId, @required this.dishPrice}) : super(key: key);
+  CounterWidget({Key key, @required this.dishDocumentId, @required this.dishPrice,  @required this.initialQuantity}) : super(key: key);
 
   @override
   CounterWidgetState createState() {
@@ -22,7 +23,7 @@ class CounterWidget extends StatefulWidget {
 
 class CounterWidgetState extends State<CounterWidget>{
 
-  int count = 1;
+  int count = 0;
 
   CollectionReference cart = db.collection(Utils.USERS_COLLECTION)
       .document(Utils.UID)
@@ -37,6 +38,9 @@ class CounterWidgetState extends State<CounterWidget>{
 
   @override
   Widget build(BuildContext context) {
+
+    count = widget.initialQuantity;
+
     return Center(
         child: Counter(
           initialValue: count,

@@ -3,6 +3,7 @@ import 'package:connectivity/connectivity.dart';
 class Utils{
 
   static var UID;
+  static Constants constants = Constants();
 
   // DISH TAGS
   static const DISH_TAG_PANEER = "paneer";
@@ -36,4 +37,8 @@ class Utils{
     return connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi;
   }
 
+}
+
+class Constants{
+  final String USERS_COLLECTION = "users";
 }

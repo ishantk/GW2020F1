@@ -7,10 +7,10 @@ class Orders{
   String userID;
   String restaurantID;
   DateTime orderDateTime;
-  int totalPrice;
+  int totalPrice=0;
   List<Dish> dishes;
 
-  Orders(){}
+  Orders();
   Orders.init({this.userID, this.restaurantID, this.orderDateTime, this.totalPrice, this.dishes});
   Orders.initFromFirebase({this.userID, this.restaurantID, this.orderDateTime, this.totalPrice, this.dishes, this.documentID});
 

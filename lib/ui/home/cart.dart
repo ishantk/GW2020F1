@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_counter/flutter_counter.dart';
 import 'package:gw2020f1/ui/order/place-order.dart';
 import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/model/util.dart';
@@ -22,21 +21,6 @@ class ShoppingCartPage extends StatelessWidget{
 
       appBar: AppBar(
         title: Text("CART"),
-        actions: [
-            IconButton(
-              icon: const Icon(Icons.credit_card),
-              tooltip: 'Order',
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(
-                        builder: (context) {
-                          return PlaceOrderPage();
-                        }
-                    )
-                );
-              },
-            )
-          ]
       ),
 
       body: StreamBuilder<QuerySnapshot>(
@@ -70,7 +54,7 @@ class ShoppingCartPage extends StatelessWidget{
                     Text(document.data['description'], style: TextStyle(fontSize: 16.0, color: Colors.black),),
                     Text(document.data['price'].toString(), style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),
                     Divider(),
-                    CounterWidget(dishDocumentId: document.documentID, dishPrice: document.data['price']),
+                    CounterWidget(dishDocumentId: document.documentID, dishPrice: document.data['price'], initialQuantity: document.data['quantity']),
                     Text("Total ${document.data['totalPrice'].toString()}", style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),
                     RaisedButton(
                       child: Text("REMOVE"),

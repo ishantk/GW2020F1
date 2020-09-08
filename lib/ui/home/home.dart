@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gw2020f1/fooddeliveryapp/splash.dart';
 import 'package:gw2020f1/ui/home/cart.dart';
 import 'package:gw2020f1/ui/home/filters.dart';
+import 'package:gw2020f1/ui/order/place-order.dart';
 import 'package:gw2020f1/ui/profile/user-profile.dart';
 import 'package:gw2020f1/ui/restaurants/restaurants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -89,6 +90,18 @@ class HomePageState extends State<HomePage>{
                   context,
                   MaterialPageRoute( // Intent
                       builder: (context) => ShoppingCartPage()
+                  )
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.credit_card),
+            tooltip: 'ORDER',
+            onPressed: (){
+              Navigator.push(   // startActivity()
+                  context,
+                  MaterialPageRoute( // Intent
+                      builder: (context) => PlaceOrderPage()
                   )
               );
             },
