@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gw2020f1/model/dish.dart';
 import 'package:gw2020f1/model/orders.dart';
+import 'package:gw2020f1/ui/order/payment-gateway-checkout.dart';
 import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/model/util.dart';
 
@@ -27,6 +29,7 @@ Future<String> fetchDishesFromCartAndPlaceOrder() async{
 
         order.restaurantID = docs[0]['restaurantId'];
 
+        print("restaurantId: ${order.restaurantID}");
         /* Lambda Expression
         docs.forEach((DocumentSnapshot document) {
 
@@ -41,7 +44,7 @@ Future<String> fetchDishesFromCartAndPlaceOrder() async{
         // Traditional For loop
         for(int i=0;i<docs.length;i++){
           DocumentSnapshot document = docs[i];
-
+          print(document.data.toString());
           Dish dish = Dish.initFromFirebase(name:document.data['name'], imageUrl: document.data['imageUrl'],
               description: document.data['description'], price: document.data['price'],
               quantity: document.data['quantity'], documentID: document.documentID);
@@ -53,9 +56,16 @@ Future<String> fetchDishesFromCartAndPlaceOrder() async{
         db.collection(Utils.ORDER_COLLECTION).add(order.toMap())
             .then((DocumentReference document){
           print("Order Object Saved");
+
+          // Delete The Documents from the Cart
+          db.collection(Utils.USERS_COLLECTION).document(Utils.UID).collection(Utils.CART_COLLECTION).getDocuments().then((QuerySnapshot value){
+            List<DocumentSnapshot> docs = value.documents;
+            for(DocumentSnapshot document in docs){
+              db.collection(Utils.USERS_COLLECTION).document(Utils.UID).collection(Utils.CART_COLLECTION).document(document.documentID).delete();
+            }
+          });
+
           return "Order Placed";
-          // TODO: Delete The Documents from the Cart
-          //db.collection(Utils.USERS_COLLECTION).document(Utils.UID).collection("cart")
 
         });
 
@@ -154,9 +164,17 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         child: RaisedButton(
           child: Text("CONFIRM ORDER"),
           onPressed: () async {
-            //message = "INPROCESS";
-            //message = await fetchDishesFromCartAndPlaceOrder();
-            fetchDishesFromCartAndPlaceOrder();
+
+            String message = await Navigator.push(context, MaterialPageRoute(
+                builder: (context) => RazorPayCheckoutPage())
+            );
+
+            if(message.contains("SUCCESS") || message.contains("WALLET")){
+              fetchDishesFromCartAndPlaceOrder();
+            }else{
+              Fluttertoast.showToast(msg: "PAYMENT FAILED", timeInSecForIosWeb: 5);
+            }
+
           },
         ),
       ),

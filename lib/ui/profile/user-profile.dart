@@ -148,7 +148,12 @@ class UserProfileState extends State<UserProfile> {
           subtitle: Text("View Your Previous Orders",
               style: TextStyle(fontSize: 16.0)),
           trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {},
+          onTap: () {
+            MaterialPageRoute route = MaterialPageRoute(
+              builder: (context) => MyOrdersPage(),
+            );
+            Navigator.push(context, route);
+          },
         ),
         Divider(),
         ListTile(
@@ -161,10 +166,7 @@ class UserProfileState extends State<UserProfile> {
               Text("FAQ's about the App", style: TextStyle(fontSize: 16.0)),
           trailing: Icon(Icons.keyboard_arrow_right),
           onTap: () {
-            MaterialPageRoute route = MaterialPageRoute(
-              builder: (context) => MyOrdersPage(),
-            );
-            Navigator.push(context, route);
+
           },
         ),
         ListTile(
