@@ -5,14 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gw2020f1/model/dish.dart';
 import 'package:gw2020f1/model/orders.dart';
 import 'package:gw2020f1/ui/order/payment-gateway-checkout.dart';
-import 'package:gw2020f1/ui/widgets/counter.dart';
 import 'package:gw2020f1/model/util.dart';
 
 // Firestore is reference to Cloud Firestore DataBase Module of our Firebase Project
 final Firestore db = Firestore.instance;
 final FirebaseAuth auth = FirebaseAuth.instance;
-
-
 
 Future<String> fetchDishesFromCartAndPlaceOrder() async{
 
@@ -164,7 +161,6 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         child: RaisedButton(
           child: Text("CONFIRM ORDER"),
           onPressed: () async {
-
             String message = await Navigator.push(context, MaterialPageRoute(
                 builder: (context) => RazorPayCheckoutPage())
             );

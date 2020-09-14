@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 
 import 'package:flutter_counter/flutter_counter.dart';
+import 'package:gw2020f1/tutorials/google-maps.dart';
 import 'package:gw2020f1/ui/navigation-with-animation.dart';
 import 'package:gw2020f1/ui/profile/capture-image.dart';
 import 'package:gw2020f1/ui/profile/manage-addresses.dart';
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       title: appName,
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      home: MapSample(),
       routes: {
         "/capture": (context) => CaptureImageFromCamera(),
         "/user-profile": (context) => UserProfile(),
